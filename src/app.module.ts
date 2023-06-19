@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppService } from './app.service';
+import { ExpenseModule } from './expense/expense.module';
+import { ConfigurationModule } from './shared/configuration/configuration.module';
 
 @Module({
-  imports: [],
-  providers: [AppService],
+  imports: [ConfigurationModule, ExpenseModule],
 })
 export class AppModule {}

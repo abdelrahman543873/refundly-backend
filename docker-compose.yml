@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  refundly:
+    image: refundly
+    build: .
+    env_file: .env
+    restart: always
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+  db:
+    image: postgres:15.2-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: refundly
+      POSTGRES_PASSWORD: refundly
+      POSTGRES_DB: refundly
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - '5432:5432'
