@@ -1,1 +1,1 @@
-export const EXPENSE = '/expense';
+export const EXPENSES = '/expenses';

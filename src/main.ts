@@ -4,7 +4,7 @@ import { MainValidationPipe } from './shared/pipes/main-validation.pipe';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   const options = new DocumentBuilder()
     .setTitle('🚀refundly task')
     .setDescription('refundly description')

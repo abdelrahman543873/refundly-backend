@@ -16,4 +16,8 @@ export class ExpenseRepository extends BaseRepository<Expense> {
   addExpense(addExpenseDto: AddExpenseDto) {
     return this.model.create(addExpenseDto);
   }
+
+  getExpenses() {
+    return this.model.findAll();
+  }
 }

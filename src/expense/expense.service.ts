@@ -8,4 +8,8 @@ export class ExpenseService {
   addExpense(addExpenseDto: AddExpenseDto) {
     return this.expenseRepository.addExpense(addExpenseDto);
   }
+
+  getExpenses() {
+    return this.expenseRepository.getExpenses();
+  }
 }
