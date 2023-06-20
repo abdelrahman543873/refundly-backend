@@ -1,4 +1,5 @@
 import {
+  BeforeCreate,
   Column,
   CreatedAt,
   HasMany,
@@ -36,4 +37,9 @@ export class User extends Model<User> {
   expenses: Expense[];
 
   token?: string;
+
+  @BeforeCreate
+  static makeEmailLowerCase(user: User) {
+    user.email = user.email.toLowerCase();
+  }
 }

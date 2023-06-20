@@ -9,9 +9,7 @@ interface UserType {
   password?: string;
 }
 
-export const buildUserParams = async (
-  obj: UserType = {},
-): Promise<UserType> => {
+export const buildUserParams = (obj: UserType = {}): UserType => {
   return {
     name: obj.name || faker.person.firstName(),
     email: obj.email || faker.internet.email(),
@@ -20,7 +18,7 @@ export const buildUserParams = async (
 };
 
 export const userFactory = async (obj: UserType = {}) => {
-  const params = await buildUserParams(obj);
+  const params = buildUserParams(obj);
   const user = await userRepo().create({
     ...params,
     password: await hashPass(params.password),
