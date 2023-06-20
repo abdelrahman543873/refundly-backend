@@ -15,9 +15,11 @@ export class ExpenseRepository extends BaseRepository<Expense> {
 
   addExpense(
     addExpenseDto: AddExpenseDto,
+    userId: number,
     attachments: Array<Express.Multer.File>,
   ) {
     return this.model.create({
+      userId,
       ...addExpenseDto,
       ...(attachments && {
         attachments: attachments.map((attachment) => {
@@ -27,7 +29,7 @@ export class ExpenseRepository extends BaseRepository<Expense> {
     });
   }
 
-  getExpenses() {
-    return this.model.findAll();
+  getExpenses(userId: number) {
+    return this.model.findAll({ where: { userId } });
   }
 }

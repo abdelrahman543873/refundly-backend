@@ -2,6 +2,7 @@ import { ExpenseStatus } from '../../src/expense/expense.enum';
 import { faker } from '@faker-js/faker';
 import { Expense } from '../../src/expense/expense.entity';
 import { ExpenseRepo } from './expense.test-repo';
+import { userFactory } from '../user/user.factory';
 
 interface ExpenseType {
   title?: string;
@@ -10,9 +11,12 @@ interface ExpenseType {
   currency?: string;
   description?: string;
   attachments?: string[];
+  userId?: number;
 }
 
-export const buildExpenseParams = (obj: ExpenseType = {}): ExpenseType => {
+export const buildExpenseParams = async (
+  obj: ExpenseType = {},
+): Promise<ExpenseType> => {
   return {
     title: obj.title || faker.commerce.productName(),
     status:
@@ -21,12 +25,13 @@ export const buildExpenseParams = (obj: ExpenseType = {}): ExpenseType => {
     description: obj.description || faker.commerce.productDescription(),
     currency: obj.currency || faker.finance.currencyCode(),
     attachments: obj.attachments || [faker.internet.url()],
+    userId: obj.userId || (await userFactory()).id,
   };
 };
 
 export const expenseFactory = async (
   obj: ExpenseType = {},
 ): Promise<Expense> => {
-  const params: ExpenseType = buildExpenseParams(obj);
+  const params: ExpenseType = await buildExpenseParams(obj);
   return await ExpenseRepo().create(params);
 };

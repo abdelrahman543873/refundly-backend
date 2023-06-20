@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { MainValidationPipe } from './shared/pipes/main-validation.pipe';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { BaseHttpExceptionFilter } from './shared/exception-filters/base-http.exception-filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -11,6 +12,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, options);
+  app.useGlobalFilters(new BaseHttpExceptionFilter());
   SwaggerModule.setup('api', app, document);
   app.useGlobalPipes(MainValidationPipe);
   await app.listen(3000);

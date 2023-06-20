@@ -7,12 +7,17 @@ export class ExpenseService {
   constructor(private readonly expenseRepository: ExpenseRepository) {}
   addExpense(
     addExpenseDto: AddExpenseDto,
+    userId: number,
     attachments: Array<Express.Multer.File>,
   ) {
-    return this.expenseRepository.addExpense(addExpenseDto, attachments);
+    return this.expenseRepository.addExpense(
+      addExpenseDto,
+      userId,
+      attachments,
+    );
   }
 
-  getExpenses() {
-    return this.expenseRepository.getExpenses();
+  getExpenses(userId: number) {
+    return this.expenseRepository.getExpenses(userId);
   }
 }

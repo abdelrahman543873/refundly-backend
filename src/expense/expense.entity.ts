@@ -1,15 +1,23 @@
 import {
+  BelongsTo,
   Column,
   CreatedAt,
   DataType,
+  ForeignKey,
   Model,
+  PrimaryKey,
   Table,
   UpdatedAt,
 } from 'sequelize-typescript';
 import { ExpenseStatus } from './expense.enum';
+import { User } from '../user/user.entity';
 
 @Table
 export class Expense extends Model<Expense> {
+  @PrimaryKey
+  @Column({ autoIncrement: true })
+  id: number;
+
   @Column
   title!: string;
 
@@ -35,4 +43,11 @@ export class Expense extends Model<Expense> {
   @UpdatedAt
   @Column
   updatedAt!: Date;
+
+  @ForeignKey(() => User)
+  @Column({ allowNull: false })
+  userId!: number;
+
+  @BelongsTo(() => User)
+  user: User;
 }
