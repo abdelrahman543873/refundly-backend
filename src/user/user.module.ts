@@ -9,6 +9,7 @@ import { CorrectPasswordValidator } from './validators/is-correct-password.valid
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { ENV_VARIABLE_NAMES } from '../shared/constants/environment-variables.constant';
+import { DuplicateEmailValidator } from './validators/is-duplicate-email.validator';
 
 @Global()
 @Module({
@@ -31,6 +32,7 @@ import { ENV_VARIABLE_NAMES } from '../shared/constants/environment-variables.co
     UserRepository,
     ExistingUserValidator,
     CorrectPasswordValidator,
+    DuplicateEmailValidator,
   ],
   controllers: [UserController],
   exports: [UserService],

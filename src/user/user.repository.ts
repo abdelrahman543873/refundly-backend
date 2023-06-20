@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/sequelize';
 import { User } from './user.entity';
 import { BaseRepository } from '../shared/abstract/repository.abstract';
 import { AuthDto } from './dtos/auth.dto';
+import { RegisterDto } from './dtos/register.dto';
+import { hashPassSync } from '../shared/utilities/bcryptHelper.util';
 
 @Injectable()
 export class UserRepository extends BaseRepository<User> {
@@ -19,5 +21,12 @@ export class UserRepository extends BaseRepository<User> {
 
   findUserByEmail(authDto: AuthDto) {
     return this.model.findOne({ where: { email: authDto.email }, raw: true });
+  }
+
+  registerUser(registerDto: RegisterDto) {
+    return this.model.create({
+      email: registerDto.email,
+      password: hashPassSync(registerDto.password),
+    });
   }
 }
