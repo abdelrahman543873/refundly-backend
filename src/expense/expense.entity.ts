@@ -25,6 +25,9 @@ export class Expense extends Model<Expense> {
   @Column({ allowNull: true })
   description?: string;
 
+  @Column({ allowNull: true, type: DataType.ARRAY(DataType.STRING) })
+  attachments: string[];
+
   @CreatedAt
   @Column
   createdAt!: Date;

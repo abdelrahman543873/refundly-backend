@@ -9,6 +9,7 @@ interface ExpenseType {
   value?: number;
   currency?: string;
   description?: string;
+  attachments?: string[];
 }
 
 export const buildExpenseParams = (obj: ExpenseType = {}): ExpenseType => {
@@ -19,6 +20,7 @@ export const buildExpenseParams = (obj: ExpenseType = {}): ExpenseType => {
     value: obj.value || faker.number.int(),
     description: obj.description || faker.commerce.productDescription(),
     currency: obj.currency || faker.finance.currencyCode(),
+    attachments: obj.attachments || [faker.internet.url()],
   };
 };
 

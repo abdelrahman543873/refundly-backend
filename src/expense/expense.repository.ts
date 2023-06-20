@@ -13,8 +13,18 @@ export class ExpenseRepository extends BaseRepository<Expense> {
     super(model);
   }
 
-  addExpense(addExpenseDto: AddExpenseDto) {
-    return this.model.create(addExpenseDto);
+  addExpense(
+    addExpenseDto: AddExpenseDto,
+    attachments: Array<Express.Multer.File>,
+  ) {
+    return this.model.create({
+      ...addExpenseDto,
+      ...(attachments && {
+        attachments: attachments.map((attachment) => {
+          return `${process.env.APP_HOST}${attachment.filename}`;
+        }),
+      }),
+    });
   }
 
   getExpenses() {

@@ -1,11 +1,10 @@
-import { Model } from 'sequelize-typescript';
+import { Model, ModelCtor } from 'sequelize-typescript';
+import { MakeNullishOptional } from 'sequelize/types/utils';
 
-export abstract class BaseRepository<Entity> {
-  constructor(protected readonly model: typeof Model<Entity>) {}
+export abstract class BaseRepository<Entity extends Model> {
+  constructor(protected readonly model: ModelCtor<Entity>) {}
 
-  create(data: Partial<Entity>): Promise<Entity> {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore: Unreachable code error
-    return this.model.create({ ...data });
+  create(data: MakeNullishOptional<Entity>): Promise<Entity> {
+    return this.model.create(data);
   }
 }
