@@ -7,8 +7,7 @@ import { join } from 'path';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'client'),
-      renderPath: join(__dirname, '..', '..', 'client'),
+      rootPath: join(__dirname, '..', '..', '..', 'client'),
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
