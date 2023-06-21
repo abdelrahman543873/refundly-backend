@@ -7,6 +7,8 @@ interface UserType {
   name?: string;
   email?: string;
   password?: string;
+  avatar?: string;
+  companyId?: number;
 }
 
 export const buildUserParams = (obj: UserType = {}): UserType => {
@@ -14,6 +16,8 @@ export const buildUserParams = (obj: UserType = {}): UserType => {
     name: obj.name || faker.person.firstName(),
     email: obj.email || faker.internet.email(),
     password: obj.password || faker.internet.password(),
+    avatar: obj.avatar || faker.internet.url(),
+    companyId: obj.companyId || null,
   };
 };
 

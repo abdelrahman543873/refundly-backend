@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsEmail, MaxLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 import { IsDuplicateEmail } from '../validators/is-duplicate-email.validator';
 
 export class RegisterDto {
@@ -10,4 +10,8 @@ export class RegisterDto {
 
   @MaxLength(255)
   password?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  name: string;
 }

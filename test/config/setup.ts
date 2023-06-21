@@ -6,6 +6,7 @@ import { MainValidationPipe } from '../../src/shared/pipes/main-validation.pipe'
 import { UserRepository } from '../../src/user/user.repository';
 import { ExpenseRepository } from '../../src/expense/expense.repository';
 import { BaseHttpExceptionFilter } from '../../src/shared/exception-filters/base-http.exception-filter';
+import { CompanyRepository } from '../../src/company/company.repository';
 
 export default async (): Promise<void> => {
   const module = await Test.createTestingModule({
@@ -20,4 +21,5 @@ export default async (): Promise<void> => {
   global.app = app;
   global.userRepository = app.get(UserRepository);
   global.expenseRepository = app.get(ExpenseRepository);
+  global.companyRepository = app.get(CompanyRepository);
 };

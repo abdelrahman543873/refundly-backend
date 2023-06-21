@@ -12,6 +12,7 @@ describe('register user suite case', () => {
       variables: {
         email: userParams.email,
         password: userParams.password,
+        name: userParams.name,
       },
     });
     expect(res.body.email).toBe(userParams.email.toLowerCase());

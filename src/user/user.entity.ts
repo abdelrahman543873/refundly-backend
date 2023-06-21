@@ -1,7 +1,10 @@
 import {
   BeforeCreate,
+  BeforeUpdate,
+  BelongsTo,
   Column,
   CreatedAt,
+  ForeignKey,
   HasMany,
   Model,
   PrimaryKey,
@@ -9,6 +12,7 @@ import {
   UpdatedAt,
 } from 'sequelize-typescript';
 import { Expense } from '../expense/expense.entity';
+import { Company } from '../company/company.entity';
 
 @Table
 export class User extends Model<User> {
@@ -33,13 +37,28 @@ export class User extends Model<User> {
   @Column
   updatedAt: Date;
 
+  @Column
+  avatar: string;
+
   @HasMany(() => Expense)
-  expenses: Expense[];
+  expenses?: Expense[];
+
+  @ForeignKey(() => Company)
+  @Column({ allowNull: true })
+  companyId?: number;
+
+  @BelongsTo(() => Company)
+  company?: Company;
 
   token?: string;
 
   @BeforeCreate
-  static makeEmailLowerCase(user: User) {
+  static creationEmailLowerCase(user: User) {
     user.email = user.email.toLowerCase();
+  }
+
+  @BeforeUpdate
+  static updateEmailLowerCase(user: User) {
+    if (user.email) user.email = user.email.toLowerCase();
   }
 }
