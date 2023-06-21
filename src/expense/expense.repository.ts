@@ -23,7 +23,7 @@ export class ExpenseRepository extends BaseRepository<Expense> {
       ...addExpenseDto,
       ...(attachments && {
         attachments: attachments.map((attachment) => {
-          return `${process.env.APP_HOST}${attachment.filename}`;
+          return `${process.env.APP_HOST}/expenses/${attachment.filename}`;
         }),
       }),
     });
