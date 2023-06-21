@@ -11,7 +11,7 @@ import {
 import { ExpenseService } from './expense.service';
 import { AddExpenseDto } from './dtos/add-expense.dto';
 import { Expense } from './expense.entity';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '../shared/guards/auth.guard';
 import { RequestContext } from '../shared/interfaces/request-context.interface';
@@ -27,6 +27,7 @@ export class ExpenseController {
   ) {}
 
   @ApiConsumes('multipart/form-data')
+  @ApiBearerAuth()
   @UseInterceptors(FilesInterceptor('attachments'))
   @Post()
   async addExpense(
@@ -40,6 +41,7 @@ export class ExpenseController {
     );
   }
 
+  @ApiBearerAuth()
   @Get()
   async getExpenses(): Promise<Expense[]> {
     return await this.expenseService.getExpenses(this.request.user.id);
