@@ -20,7 +20,10 @@ export class UserRepository extends BaseRepository<User> {
   }
 
   findUserByEmail(authDto: AuthDto) {
-    return this.model.findOne({ where: { email: authDto.email }, raw: true });
+    return this.model.findOne({
+      where: { email: authDto.email },
+      raw: true,
+    });
   }
 
   registerUser(registerDto: RegisterDto) {
