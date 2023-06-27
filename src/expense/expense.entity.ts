@@ -4,6 +4,7 @@ import {
   CreatedAt,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
@@ -11,6 +12,7 @@ import {
 } from 'sequelize-typescript';
 import { ExpenseStatus } from './expense.enum';
 import { User } from '../user/user.entity';
+import { Comment } from '../comment/comment.entity';
 
 @Table
 export class Expense extends Model<Expense> {
@@ -50,4 +52,7 @@ export class Expense extends Model<Expense> {
 
   @BelongsTo(() => User)
   user: User;
+
+  @HasMany(() => Comment)
+  comments?: Comment[];
 }

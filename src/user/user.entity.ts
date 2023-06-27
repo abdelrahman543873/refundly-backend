@@ -13,6 +13,7 @@ import {
 } from 'sequelize-typescript';
 import { Expense } from '../expense/expense.entity';
 import { Company } from '../company/company.entity';
+import { Comment } from '../comment/comment.entity';
 
 @Table
 export class User extends Model<User> {
@@ -42,6 +43,9 @@ export class User extends Model<User> {
 
   @HasMany(() => Expense)
   expenses?: Expense[];
+
+  @HasMany(() => Comment)
+  comments?: Comment[];
 
   @ForeignKey(() => Company)
   @Column({ allowNull: true })
