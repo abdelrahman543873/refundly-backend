@@ -1,6 +1,5 @@
 import {
   Allow,
-  IsEnum,
   IsISO4217CurrencyCode,
   IsNotEmpty,
   IsNumber,
@@ -8,7 +7,6 @@ import {
   IsString,
   Min,
 } from 'class-validator';
-import { ExpenseStatus } from '../expense.enum';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -16,9 +14,6 @@ export class AddExpenseDto {
   @IsString()
   @IsNotEmpty()
   title!: string;
-
-  @IsEnum(ExpenseStatus)
-  status!: ExpenseStatus;
 
   @IsNumber()
   @Min(1)

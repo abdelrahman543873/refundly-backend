@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Expense } from './expense.entity';
 import { AddExpenseDto } from './dtos/add-expense.dto';
 import { BaseRepository } from '../shared/abstract/repository.abstract';
+import { ExpenseStatus } from './expense.enum';
 
 @Injectable()
 export class ExpenseRepository extends BaseRepository<Expense> {
@@ -21,6 +22,7 @@ export class ExpenseRepository extends BaseRepository<Expense> {
     return this.model.create({
       userId,
       ...addExpenseDto,
+      status: ExpenseStatus.REQUESTED,
       ...(attachments && {
         attachments: attachments.map((attachment) => {
           return `${process.env.APP_HOST}expenses/${attachment.filename}`;
