@@ -4,6 +4,7 @@ import { Comment } from './comment.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import { AddCommentDto } from './dtos/add-comment.dto';
 import { GetExpenseComments } from './dtos/get-expense-comments.dto';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class CommentRepository extends BaseRepository<Comment> {
@@ -15,7 +16,10 @@ export class CommentRepository extends BaseRepository<Comment> {
   }
 
   getExpenseComments(getExpenseComments: GetExpenseComments) {
-    return this.model.findAll({ where: { ...getExpenseComments } });
+    return this.model.findAll({
+      where: { ...getExpenseComments },
+      include: [{ model: User, attributes: ['name', 'avatar'] }],
+    });
   }
 
   addComment(

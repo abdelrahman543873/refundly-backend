@@ -16,6 +16,7 @@ describe('get expense comments suite case', () => {
       },
       token: user.token,
     });
+    expect(res.body[0].user).toHaveProperty('name');
     expect(res.body.length).toBeGreaterThanOrEqual(1);
     expect(res.body[0].content).toBe(comment.content);
   });
