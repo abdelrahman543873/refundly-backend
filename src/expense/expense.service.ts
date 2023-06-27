@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ExpenseRepository } from './expense.repository';
 import { AddExpenseDto } from './dtos/add-expense.dto';
+import { ResolveExpenseDto } from './dtos/resolve-expense.dto';
 
 @Injectable()
 export class ExpenseService {
@@ -19,5 +20,9 @@ export class ExpenseService {
 
   getExpenses(userId: number) {
     return this.expenseRepository.getExpenses(userId);
+  }
+
+  resolve(resolveExpenseDto: ResolveExpenseDto) {
+    return this.expenseRepository.resolve(resolveExpenseDto);
   }
 }

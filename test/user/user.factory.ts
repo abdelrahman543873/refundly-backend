@@ -2,6 +2,7 @@ import { faker } from '@faker-js/faker';
 import { userRepo } from './user.test-repo';
 import { hashPass } from '../../src/shared/utilities/bcryptHelper.util';
 import { generateAuthToken } from '../../src/shared/utilities/token.util';
+import { UserRoleEnum } from '../../src//user/user.enum';
 
 interface UserType {
   name?: string;
@@ -9,6 +10,7 @@ interface UserType {
   password?: string;
   avatar?: string;
   companyId?: number;
+  role?: UserRoleEnum;
 }
 
 export const buildUserParams = (obj: UserType = {}): UserType => {
@@ -18,6 +20,9 @@ export const buildUserParams = (obj: UserType = {}): UserType => {
     password: obj.password || faker.internet.password(),
     avatar: obj.avatar || faker.internet.url(),
     companyId: obj.companyId || null,
+    role:
+      obj.role ||
+      (faker.helpers.arrayElement(Object.keys(UserRoleEnum)) as UserRoleEnum),
   };
 };
 

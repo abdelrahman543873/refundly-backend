@@ -7,6 +7,7 @@ import {
   UploadedFiles,
   UseGuards,
   Inject,
+  Put,
 } from '@nestjs/common';
 import { ExpenseService } from './expense.service';
 import { AddExpenseDto } from './dtos/add-expense.dto';
@@ -16,6 +17,10 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '../shared/guards/auth.guard';
 import { RequestContext } from '../shared/interfaces/request-context.interface';
 import { REQUEST } from '@nestjs/core';
+import { ResolveExpenseDto } from './dtos/resolve-expense.dto';
+import { RoleGuard } from '../shared/guards/role.guard';
+import { HasRoles } from '../shared/guards/roles.metadata';
+import { UserRoleEnum } from '../user/user.enum';
 
 @UseGuards(AuthGuard)
 @ApiTags('expense')
@@ -45,5 +50,13 @@ export class ExpenseController {
   @Get()
   async getExpenses(): Promise<Expense[]> {
     return await this.expenseService.getExpenses(this.request.user.id);
+  }
+
+  @ApiBearerAuth()
+  @HasRoles(UserRoleEnum.OWNER, UserRoleEnum.ADMIN)
+  @UseGuards(RoleGuard)
+  @Put('/resolve')
+  async resolve(@Body() resolveExpenseDto: ResolveExpenseDto) {
+    return (await this.expenseService.resolve(resolveExpenseDto))[1][0];
   }
 }

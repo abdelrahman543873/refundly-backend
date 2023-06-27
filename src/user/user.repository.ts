@@ -5,6 +5,7 @@ import { BaseRepository } from '../shared/abstract/repository.abstract';
 import { AuthDto } from './dtos/auth.dto';
 import { RegisterDto } from './dtos/register.dto';
 import { hashPassSync } from '../shared/utilities/bcryptHelper.util';
+import { UserRoleEnum } from './user.enum';
 
 @Injectable()
 export class UserRepository extends BaseRepository<User> {
@@ -29,6 +30,7 @@ export class UserRepository extends BaseRepository<User> {
   registerUser(registerDto: RegisterDto) {
     return this.model.create({
       email: registerDto.email,
+      role: UserRoleEnum.EMPLOYEE,
       password: hashPassSync(registerDto.password),
     });
   }

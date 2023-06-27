@@ -4,6 +4,7 @@ import {
   BelongsTo,
   Column,
   CreatedAt,
+  DataType,
   ForeignKey,
   HasMany,
   Model,
@@ -14,6 +15,7 @@ import {
 import { Expense } from '../expense/expense.entity';
 import { Company } from '../company/company.entity';
 import { Comment } from '../comment/comment.entity';
+import { UserRoleEnum } from './user.enum';
 
 @Table
 export class User extends Model<User> {
@@ -46,6 +48,12 @@ export class User extends Model<User> {
 
   @HasMany(() => Comment)
   comments?: Comment[];
+
+  @Column({
+    type: DataType.ENUM(...Object.keys(UserRoleEnum)),
+    allowNull: false,
+  })
+  role: UserRoleEnum;
 
   @ForeignKey(() => Company)
   @Column({ allowNull: true })
