@@ -1,6 +1,13 @@
 import { Transform } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import {
+  Allow,
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 import { IsDuplicateEmail } from '../validators/is-duplicate-email.validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class RegisterDto {
   @IsDuplicateEmail()
@@ -14,4 +21,8 @@ export class RegisterDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  @ApiProperty({ type: 'string', format: 'binary' })
+  @Allow()
+  avatar?: string;
 }

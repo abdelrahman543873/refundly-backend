@@ -27,11 +27,14 @@ export class UserRepository extends BaseRepository<User> {
     });
   }
 
-  registerUser(registerDto: RegisterDto) {
+  registerUser(registerDto: RegisterDto, avatar: Express.Multer.File) {
     return this.model.create({
       email: registerDto.email,
       role: UserRoleEnum.EMPLOYEE,
       password: hashPassSync(registerDto.password),
+      ...(avatar && {
+        avatar: `${process.env.APP_HOST}users/${avatar.filename}`,
+      }),
     });
   }
 }

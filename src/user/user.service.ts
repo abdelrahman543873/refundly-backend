@@ -23,7 +23,7 @@ export class UserService {
     return user;
   }
 
-  async registerUser(registerDto: RegisterDto) {
-    return await this.userRepository.registerUser(registerDto);
+  async registerUser(registerDto: RegisterDto, avatar: Express.Multer.File) {
+    return await this.userRepository.registerUser(registerDto, avatar);
   }
 }

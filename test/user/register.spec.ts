@@ -6,6 +6,8 @@ import { buildUserParams } from '../user/user.factory';
 describe('register user suite case', () => {
   it('should register user successfully', async () => {
     const userParams = buildUserParams();
+    const testFiles = process.cwd();
+    const filePath = `${testFiles}/test/test-files/test-duck.jpeg`;
     const res = await testRequest({
       method: HTTP_METHODS_ENUM.POST,
       url: REGISTER,
@@ -14,7 +16,10 @@ describe('register user suite case', () => {
         password: userParams.password,
         name: userParams.name,
       },
+      fileParam: 'avatar',
+      filePath,
     });
+    expect(res.body).toHaveProperty('avatar');
     expect(res.body.email).toBe(userParams.email.toLowerCase());
   });
 });
