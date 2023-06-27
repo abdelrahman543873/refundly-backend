@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
 import { AddCommentDto } from './dtos/add-comment.dto';
+import { GetExpenseComments } from './dtos/get-expense-comments.dto';
 
 @Injectable()
 export class CommentService {
@@ -16,5 +17,9 @@ export class CommentService {
       addCommentDto,
       attachments,
     );
+  }
+
+  getExpenseComments(getExpenseComments: GetExpenseComments) {
+    return this.commentRepository.getExpenseComments(getExpenseComments);
   }
 }

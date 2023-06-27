@@ -2,7 +2,9 @@ import { RequestContext } from './../shared/interfaces/request-context.interface
 import {
   Body,
   Controller,
+  Get,
   Inject,
+  Param,
   Post,
   UploadedFiles,
   UseGuards,
@@ -14,6 +16,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { AddCommentDto } from './dtos/add-comment.dto';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '../shared/guards/auth.guard';
+import { GetExpenseComments } from './dtos/get-expense-comments.dto';
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
@@ -36,5 +39,10 @@ export class CommentController {
       attachments,
       this.request.user.id,
     );
+  }
+
+  @Get('/expense/:expenseId')
+  async getExpenseComments(@Param() getExpenseComments: GetExpenseComments) {
+    return await this.commentService.getExpenseComments(getExpenseComments);
   }
 }
