@@ -5,6 +5,7 @@ import { AddExpenseDto } from './dtos/add-expense.dto';
 import { BaseRepository } from '../shared/abstract/repository.abstract';
 import { ExpenseStatus } from './expense.enum';
 import { ResolveExpenseDto } from './dtos/resolve-expense.dto';
+import { col, fn, literal } from 'sequelize';
 
 @Injectable()
 export class ExpenseRepository extends BaseRepository<Expense> {
@@ -34,6 +35,14 @@ export class ExpenseRepository extends BaseRepository<Expense> {
 
   getExpenses(userId: number) {
     return this.model.findAll({ where: { userId } });
+  }
+
+  summary(userId: number) {
+    return this.model.findAll({
+      attributes: [[fn('SUM', col('value')), 'categoryTotal'], 'category'],
+      group: ['category'],
+      where: { userId },
+    });
   }
 
   resolve(resolveExpenseDto: ResolveExpenseDto) {

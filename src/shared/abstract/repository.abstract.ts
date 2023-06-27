@@ -7,4 +7,8 @@ export abstract class BaseRepository<Entity extends Model> {
   create(data: MakeNullishOptional<Entity>): Promise<Entity> {
     return this.model.create(data);
   }
+
+  addMany(data: MakeNullishOptional<Entity>[]): Promise<Entity[]> {
+    return this.model.bulkCreate(data);
+  }
 }

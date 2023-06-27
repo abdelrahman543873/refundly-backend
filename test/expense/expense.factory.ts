@@ -33,6 +33,17 @@ export const buildExpenseParams = async (
   };
 };
 
+export const expensesFactory = async (
+  count = 10,
+  obj: ExpenseType = {},
+): Promise<Expense[]> => {
+  const pages: ExpenseType[] = [];
+  for (let i = 0; i < count; i++) {
+    pages.push(await buildExpenseParams(obj));
+  }
+  return await ExpenseRepo().addMany(pages);
+};
+
 export const expenseFactory = async (
   obj: ExpenseType = {},
 ): Promise<Expense> => {

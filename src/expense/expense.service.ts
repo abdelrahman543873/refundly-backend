@@ -22,6 +22,10 @@ export class ExpenseService {
     return this.expenseRepository.getExpenses(userId);
   }
 
+  summary(userId: number) {
+    return this.expenseRepository.summary(userId);
+  }
+
   resolve(resolveExpenseDto: ResolveExpenseDto) {
     return this.expenseRepository.resolve(resolveExpenseDto);
   }

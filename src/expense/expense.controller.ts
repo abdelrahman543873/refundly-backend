@@ -52,6 +52,11 @@ export class ExpenseController {
     return await this.expenseService.getExpenses(this.request.user.id);
   }
 
+  @Get('summary')
+  async summary() {
+    return await this.expenseService.summary(this.request.user.id);
+  }
+
   @ApiBearerAuth()
   @HasRoles(UserRoleEnum.OWNER, UserRoleEnum.ADMIN)
   @UseGuards(RoleGuard)
