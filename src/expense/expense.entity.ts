@@ -10,7 +10,7 @@ import {
   Table,
   UpdatedAt,
 } from 'sequelize-typescript';
-import { ExpenseStatus } from './expense.enum';
+import { ExpenseCategory, ExpenseStatus } from './expense.enum';
 import { User } from '../user/user.entity';
 import { Comment } from '../comment/comment.entity';
 
@@ -34,6 +34,9 @@ export class Expense extends Model<Expense> {
 
   @Column({ allowNull: true })
   description?: string;
+
+  @Column({ type: DataType.ENUM(...Object.values(ExpenseCategory)) })
+  category!: ExpenseCategory;
 
   @Column({ allowNull: true, type: DataType.ARRAY(DataType.STRING) })
   attachments: string[];

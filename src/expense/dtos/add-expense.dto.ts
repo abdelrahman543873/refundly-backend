@@ -1,5 +1,6 @@
 import {
   Allow,
+  IsEnum,
   IsISO4217CurrencyCode,
   IsNotEmpty,
   IsNumber,
@@ -9,6 +10,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { ExpenseCategory } from '../expense.enum';
 
 export class AddExpenseDto {
   @IsString()
@@ -26,6 +28,9 @@ export class AddExpenseDto {
   @IsOptional()
   @IsString()
   description?: string;
+
+  @IsEnum(ExpenseCategory)
+  category!: ExpenseCategory;
 
   @ApiProperty({ type: 'array', items: { type: 'string', format: 'binary' } })
   @Allow()

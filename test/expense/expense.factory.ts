@@ -1,4 +1,4 @@
-import { ExpenseStatus } from '../../src/expense/expense.enum';
+import { ExpenseCategory, ExpenseStatus } from '../../src/expense/expense.enum';
 import { faker } from '@faker-js/faker';
 import { Expense } from '../../src/expense/expense.entity';
 import { ExpenseRepo } from './expense.test-repo';
@@ -12,6 +12,7 @@ interface ExpenseType {
   description?: string;
   attachments?: string[];
   userId?: number;
+  category?: ExpenseCategory;
 }
 
 export const buildExpenseParams = async (
@@ -25,6 +26,9 @@ export const buildExpenseParams = async (
     description: obj.description || faker.commerce.productDescription(),
     currency: obj.currency || faker.finance.currencyCode(),
     attachments: obj.attachments || [faker.internet.url()],
+    category:
+      obj.category ||
+      faker.helpers.arrayElement(Object.values(ExpenseCategory)),
     userId: obj.userId || (await userFactory()).id,
   };
 };
