@@ -12,7 +12,7 @@ import {
 import { UserService } from './user.service';
 import { AuthDto } from './dtos/auth.dto';
 import { RegisterDto } from './dtos/register.dto';
-import { ApiConsumes } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
@@ -29,6 +29,7 @@ export class UserController {
     return await this.userService.authenticateUser(authDto);
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get('info')
   async info() {
