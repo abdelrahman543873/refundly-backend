@@ -15,7 +15,7 @@ import { RegisterDto } from './dtos/register.dto';
 import { ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { REQUEST } from '@nestjs/core';
-import { AuthGuard } from 'src/shared/guards/auth.guard';
+import { AuthGuard } from '../shared/guards/auth.guard';
 
 @Controller('user')
 export class UserController {

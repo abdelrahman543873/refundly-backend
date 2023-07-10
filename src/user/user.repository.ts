@@ -30,6 +30,7 @@ export class UserRepository extends BaseRepository<User> {
   registerUser(registerDto: RegisterDto, avatar: Express.Multer.File) {
     return this.model.create({
       email: registerDto.email,
+      name: registerDto.name,
       role: UserRoleEnum.EMPLOYEE,
       password: hashPassSync(registerDto.password),
       ...(avatar && {

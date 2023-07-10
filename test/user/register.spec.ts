@@ -21,5 +21,6 @@ describe('register user suite case', () => {
     });
     expect(res.body).toHaveProperty('avatar');
     expect(res.body.email).toBe(userParams.email.toLowerCase());
+    expect(res.body.name).toBe(userParams.name);
   });
 });
