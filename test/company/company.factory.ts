@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { userFactory } from 'test/user/user.factory';
 import { companyRepo } from './company.test-repo';
+import { userFactory } from '../user/user.factory';
 
 interface CompanyType {
   name?: string;
