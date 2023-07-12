@@ -3,6 +3,7 @@ import { UserRepository } from './user.repository';
 import { AuthDto } from './dtos/auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dtos/register.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -21,6 +22,14 @@ export class UserService {
     });
     user.token = this.jwtService.sign({ userId: user.id });
     return user;
+  }
+
+  updateUser(
+    updateUserDto: UpdateUserDto,
+    avatar: Express.Multer.File,
+    userId: number,
+  ) {
+    return this.userRepository.updateUser(updateUserDto, avatar, userId);
   }
 
   async registerUser(registerDto: RegisterDto, avatar: Express.Multer.File) {

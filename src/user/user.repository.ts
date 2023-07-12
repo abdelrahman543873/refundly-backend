@@ -6,6 +6,7 @@ import { AuthDto } from './dtos/auth.dto';
 import { RegisterDto } from './dtos/register.dto';
 import { hashPassSync } from '../shared/utilities/bcryptHelper.util';
 import { UserRoleEnum } from './user.enum';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Injectable()
 export class UserRepository extends BaseRepository<User> {
@@ -25,6 +26,24 @@ export class UserRepository extends BaseRepository<User> {
       where: { email: authDto.email },
       raw: true,
     });
+  }
+
+  updateUser(
+    updateUserDto: UpdateUserDto,
+    avatar: Express.Multer.File,
+    id: number,
+  ) {
+    return this.model.update(
+      {
+        email: updateUserDto.email,
+        name: updateUserDto.name,
+        password: hashPassSync(updateUserDto.password),
+        ...(avatar && {
+          avatar: `${process.env.APP_HOST}users/${avatar.filename}`,
+        }),
+      },
+      { where: { id }, returning: true },
+    );
   }
 
   registerUser(registerDto: RegisterDto, avatar: Express.Multer.File) {

@@ -5,6 +5,7 @@ import {
   Get,
   Inject,
   Post,
+  Put,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -16,6 +17,7 @@ import { ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '../shared/guards/auth.guard';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -27,6 +29,23 @@ export class UserController {
   @Post('auth')
   async authenticateUser(@Body() authDto: AuthDto) {
     return await this.userService.authenticateUser(authDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('avatar'))
+  @Put()
+  async updateUser(
+    @Body() updateUserDto: UpdateUserDto,
+    @UploadedFile() avatar: Express.Multer.File,
+  ) {
+    return (
+      await this.userService.updateUser(
+        updateUserDto,
+        avatar,
+        this.request.user.id,
+      )
+    )[1][0];
   }
 
   @ApiBearerAuth()
