@@ -31,6 +31,7 @@ export class UserController {
     return await this.userService.authenticateUser(authDto);
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('avatar'))
