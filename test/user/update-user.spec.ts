@@ -14,7 +14,6 @@ describe('update user suite case', () => {
       url: USER,
       variables: {
         email: userParams.email,
-        password: userParams.password,
         name: userParams.name,
       },
       fileParam: 'avatar',

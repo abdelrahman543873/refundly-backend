@@ -35,9 +35,10 @@ export class UserRepository extends BaseRepository<User> {
   ) {
     return this.model.update(
       {
-        email: updateUserDto.email,
-        name: updateUserDto.name,
-        password: hashPassSync(updateUserDto.password),
+        ...updateUserDto,
+        ...(updateUserDto.password && {
+          password: hashPassSync(updateUserDto.password),
+        }),
         ...(avatar && {
           avatar: `${process.env.APP_HOST}users/${avatar.filename}`,
         }),
